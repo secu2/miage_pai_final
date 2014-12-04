@@ -202,11 +202,14 @@ void handleConnection(int socketAttr){
     char chaineGestion[] = CHAINEGESTION;
     if(strstr(buffer, chaineInfirmiere)!=NULL) {
         //TODO: On reconnait la chaine de l'infirmière
+        printf("Reçu /INFIRMIERE\n");
     }
     else if(strstr(buffer, chaineGestion)!=NULL) {
         //TODO: On reconnait une connexion au paneau de gestion
+        printf("Reçu interface gestion\n");
     } else {
         //TODO: Pas de chaine spéciale trouvée, on fait transiter les infos uniquement
+        printf("Pas de chaine spéciale trouvée\n");
     }
 
 
