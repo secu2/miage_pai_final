@@ -210,7 +210,7 @@ void handleConnection(int socketAttr){
             printf("[Conection] Infirmiere %d\n", idInfirmiere);
 		int c;
 		execle("../../cabinetInfirmier/Serveur2/data/XML_Process/testparsers","../../cabineInfirmier/Serveur2/data/cabinetInfirmier.xml", idInfirmiere);
-		FILE* f1 = fopen("../../cabinetInfirmier/Serveur2/data/XML_Process/test.html","r");
+		FILE* f1 = fopen("../../cabinetInfirmier/Serveur2/data/XML_Process/test1.html","r");
 		if(f1)
 		{
 			while ((c = getc(f1))!=EOF)
