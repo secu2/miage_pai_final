@@ -13,6 +13,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <math.h>
+#include <netdb.h>
 
 void handleConnection(int socket);
 void error(const char *error);
@@ -103,7 +104,7 @@ int main (int argc, char *argv[]){
     return 0;
 }
 
-void handleConnection(int socket){
+void handleConnection(int socketAttr){
     char buffer[BUFFER];
     int RWReturn;
 
@@ -111,7 +112,7 @@ void handleConnection(int socket){
     bzero(buffer,BUFFER);
 
     //Read from the socket
-    RWReturn = read(socket, buffer, BUFFER-1);
+    RWReturn = read(socketAttr, buffer, BUFFER-1);
     int length = getMessageLength(buffer);
     if (RWReturn < 0){
         error("[Error] Can't read from socket (1)");
@@ -123,7 +124,7 @@ void handleConnection(int socket){
         int nbCut = length/BUFFER;
         strcpy(finalString, buffer);
         while(nbCut > 0){
-            RWReturn = read(socket, buffer, BUFFER-1);
+            RWReturn = read(socketAttr, buffer, BUFFER-1);
             if (RWReturn < 0){
                 error("[Error] Can't read from socket (2)");
             }
@@ -155,7 +156,7 @@ void handleConnection(int socket){
         exit(0);
     }
 
-    proxyUJFInfo = gethostbyname(proxyUJFAddress);
+    proxyUJFInfo = gethostbyname(proxyUJF);
     if (proxyUJFInfo == NULL) {
         error("[Error] Can't resolve proxy hostname");
         exit(0);
@@ -208,7 +209,7 @@ void handleConnection(int socket){
 
 
     //Confirm message has been received
-    RWReturn = write(socket, "ok", 2);
+    RWReturn = write(socketAttr, "ok", 2);
     if (RWReturn < 0){
         error("[Error] Can't write on socket");
     }
