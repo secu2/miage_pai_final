@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DistanceMatrixResponse>
+ <status>OK</status>
+ <origin_address>Vancouver, BC, Canada</origin_address>
+ <origin_address>Seattle, Washington, Etats-Unis</origin_address>
+ <destination_address>San Francisco, Californie, Etats-Unis</destination_address>
+ <destination_address>Vancouver, BC, Canada</destination_address>
+ <row>
+  <element>
+   <status>OK</status>
+   <duration>
+    <value>328371</value>
+    <text>3 jours 19 heures</text>
+   </duration>
+   <distance>
+    <value>1711412</value>
+    <text>1 711 km</text>
+   </distance>
+  </element>
+  <element>
+   <status>OK</status>
+   <duration>
+    <value>0</value>
+    <text>1 minute</text>
+   </duration>
+   <distance>
+    <value>0</value>
+    <text>1 m</text>
+   </distance>
+  </element>
+ </row>
+ <row>
+  <element>
+   <status>OK</status>
+   <duration>
+    <value>275800</value>
+    <text>3 jours 5 heures</text>
+   </duration>
+   <distance>
+    <value>1455802</value>
+    <text>1 456 km</text>
+   </distance>
+  </element>
+  <element>
+   <status>OK</status>
+   <duration>
+    <value>55331</value>
+    <text>15 heures 22 minutes</text>
+   </duration>
+   <distance>
+    <value>271900</value>
+    <text>272 km</text>
+   </distance>
+  </element>
+ </row>
+</DistanceMatrixResponse>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<xs:schema version="1.0"
+           targetNamespace="http://localhost/schema/cabinetInfirmier"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://localhost/schema/cabinetInfirmier"
+           elementFormDefault="qualified">
+
+    <xs:element name="cabinet" type="Cabinet" />
+    
+    <xs:complexType name="Cabinet">
+        <xs:sequence>
+            <xs:element name="nom" />
+            <xs:element name="adresse" type="Adresse" />
+            <xs:element name="infirmiers" type="Infirmiers" />
+            <xs:element name="patients" type="Patients" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="Infirmiers">
+        <xs:sequence>
+            <xs:element name="infirmier" maxOccurs="unbounded" type="Infirmier" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="Infirmier">
+        <xs:sequence>
+            <xs:element name="nom" />
+            <xs:element name="prenom" />
+            <xs:element name="photo" />
+        </xs:sequence>
+        <xs:attribute name="id" type="Id" />
+    </xs:complexType>
+    
+    <xs:simpleType name="Id">
+        <xs:restriction base="xs:int">
+            <xs:pattern value="\d\d\d" /> <!-- 3 digits -->
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="Patients">
+        <xs:sequence>
+            <xs:element name="patient" maxOccurs="unbounded" type="Patient" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="Patient">
+        <xs:sequence>
+            <xs:element name="nom" />
+            <xs:element name="prenom" />
+            <xs:element name="sexe" type="Sexe" />
+            <xs:element name="naissance" type="xs:date" />
+            <xs:element name="numero" type="NumeroSecuriteSociale" />
+            <xs:element name="adresse" type="Adresse" />
+            <xs:element name="visite" type="Visite" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:simpleType name="Sexe">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="M"/>
+            <xs:enumeration value="F"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="NumeroSecuriteSociale">
+        <xs:restriction base="xs:string">
+            <xs:length value="15"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="Adresse">
+        <xs:all>
+            <xs:element name="etage" minOccurs="0" type="xs:int" />
+            <xs:element name="no" minOccurs="0" type="xs:int" />
+            <xs:element name="rue" />
+            <xs:element name="ville" />
+            <xs:element name="codePostal" type="CodePostal" />
+        </xs:all>
+    </xs:complexType>
+    
+    <xs:simpleType name="CodePostal">
+        <xs:restriction base="xs:int">
+            <xs:pattern value="[0-9]{5}" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="Visite">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="acte" type="Acte" />
+        </xs:sequence>
+        <xs:attribute name="date" type="xs:date" use="required" /> 
+        <xs:attribute name="intervenant" type="Id" />
+    </xs:complexType>
+    
+    <xs:complexType name="Acte">
+        <xs:attribute name="id" type="Id" />
+    </xs:complexType>
+</xs:schema>

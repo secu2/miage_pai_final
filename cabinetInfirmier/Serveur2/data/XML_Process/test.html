@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/TR/html4/" xmlns:cab="http://www.ujf-grenoble.fr/l3miage/cabinet" xmlns:act="http://www.ujf-grenoble.fr/l3miage/actes"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="facture.js"></script><script type="text/javascript">
+function openFacture(prenom, nom, actes) {
+console.log(actes);
+var width = 500;
+var height = 300;
+if(window.innerWidth) {
+var left = (window.innerWidth-width)/2;
+var top = (window.innerHeight-height)/2;
+}
+else {
+var left = (document.body.clientWidth-width)/2;
+var top = (document.body.clientHeight-height)/2;
+}
+var factureWindow = window.open('','facture','menubar=yes, scrollbars=yes, top='+top+', left='+left+', width='+width+', height='+height+'');
+//factureText = "Facture pour : " + prenom + " " + nom;
+var factureText = afficherFacture(prenom, nom, actes);
+factureWindow.document.write(factureText);
+}
+</script><title>Bonjour Annie</title></head><body><h2>Bonjour Annie,</h2><p>aujourd'hui vous avez 1 patient</p><table border="1"><tr><th>Nom</th><td>Orouge</td></tr><tr><th>Prénom</th><td>Elvire</td></tr><tr><th>Adresse</th><td><table><tr><td>rond-Point de la Croix de Vie</td></tr><tr><td>38700 La Tronche</td></tr></table></td></tr><tr><th rowspan="1">
+Soins:
+</th><td>
+            Prélèvement aseptique cutané ou de sécrétions muqueuses, prélèvement
+            de selles ou d'urine pour examens sytologiques, bactériologiques, mycologiques.       
+         (103)</td></tr><tr><td colspan="2"><p></p><button onclick="openFacture('Elvire','Orouge','103 ')">
+Facture
+</button></td></tr></table></body></html>
