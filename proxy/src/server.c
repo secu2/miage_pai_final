@@ -155,13 +155,13 @@ void handleConnection(int socket){
         exit(0);
     }
 
-    proxyUJFAddressInfo = gethostbyname(proxyUJFAddress);
-    if (hostinfo_cacheujf == NULL) {
+    proxyUJFInfo = gethostbyname(proxyUJFAddress);
+    if (proxyUJFInfo == NULL) {
         error("[Error] Can't resolve proxy hostname");
         exit(0);
     }
 
-    proxyUJFAddress.sin_addr = *(struct in_addr *) proxyUJFAddressInfo->h_addr;
+    proxyUJFAddress.sin_addr = *(struct in_addr *) proxyUJFInfo->h_addr;
     proxyUJFAddress.sin_port = htons(3128);
     proxyUJFAddress.sin_family = AF_INET;
 
@@ -200,7 +200,7 @@ void handleConnection(int socket){
     if(strstr(buffer, chaineInfirmiere)!=NULL) {
         //TODO: On reconnait la chaine de l'infirmière
     }
-    else if(strstr(buffer_in, chaine_intercept_gest)!=NULL) {
+    else if(strstr(buffer, chaineGestion)!=NULL) {
         //TODO: On reconnait une connexion au paneau de gestion
     } else {
         //TODO: Pas de chaine spéciale trouvée, on fait transiter les infos uniquement
