@@ -8,7 +8,6 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
-#include "../lib/libcomm/communicate.h"
 
 void error(const char *error){
     perror(error);

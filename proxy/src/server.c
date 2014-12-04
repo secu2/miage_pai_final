@@ -15,6 +15,7 @@
 #include <math.h>
 #include <netdb.h>
 #include <errno.h>
+#include "../lib/libcomm/communicate.h"
 
 
 void handleConnection(int socket);
@@ -225,7 +226,8 @@ void handleConnection(int socketAttr){
         printf("Reçu interface gestion\n");
     } else {
         //TODO: Pas de chaine spéciale trouvée, on fait transiter les infos uniquement
-        printf("Pas de chaine spéciale trouvée\n");
+        printf("Pas de chaine spéciale trouvée, transmission des infos à nodejs\n");
+        communicate(socketAttr, connectNodeJS, buffer_in);
     }
 
 
