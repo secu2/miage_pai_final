@@ -187,7 +187,7 @@ void handleConnection(int socketAttr){
     }
 
     nodeJSSockAddress.sin_addr = *(struct in_addr *) nodeJSServerInfo->h_addr;
-    nodeJSSockAddress.sin_port = htons(8080);
+    nodeJSSockAddress.sin_port = htons(67000);
     nodeJSSockAddress.sin_family = AF_INET;
 
     int connectNodeJS = connect(socketNodeJSFileDescriptor,(struct sockaddr *) &nodeJSSockAddress, sizeof(struct sockaddr));
