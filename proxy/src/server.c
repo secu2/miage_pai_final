@@ -3,6 +3,7 @@
 #define WAITLIST 5
 #define MAXSIZE 10
 #define CHAINEINFIRMIERE "/INFIRMIERE"
+#define CHAINEGESTION "interface-infirmiere"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,11 +46,14 @@ int main (int argc, char *argv[]){
 
     //Fill with 0's
     bzero((char *) &serverAddress, sizeof(serverAddress));
+    bzero((char *) &clientAddress, sizeof(clientAddress));
 
     //Fill struct
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_addr.s_addr = INADDR_ANY;
     serverAddress.sin_port = htons(portNumber);
+
+
 
     socketFileDescriptor = socket(AF_INET, SOCK_STREAM, 0);
     if (socketFileDescriptor < 0){
@@ -130,14 +134,80 @@ void handleConnection(int socket){
         //Print received message
         printf("Received from client: %s\n", buffer);
     }*/
+
+    int socketNodeJSFileDescriptor, socketProxyUJFFileDescriptor;
+    struct hostent *nodeJSServerInfo = NULL;
+    struct hostent *proxyUJFInfo = NULL;
+
+
+    const char *nodeJSServer = "127.0.0.1";
+    const char *proxyUJF = "www-cache.ujf-grenoble.fr";
+
+    struct sockaddr_in nodeJSSockAddress, proxyUJFAddress;
+
+    bzero((char *) &nodeJSSockAddress, sizeof(nodeJSSockAddress));
+    bzero((char *) &proxyUJFAddress, sizeof(proxyUJFAddress));
+
+    //Connect UJF Proxy
+    socketProxyUJFFileDescriptor = socket(AF_INET, SOCK_STREAM, 0);
+    if (socketProxyUJFFileDescriptor < 0){
+        error("[Error] Can't accept connections on socket");
+        exit(0);
+    }
+
+    proxyUJFAddressInfo = gethostbyname(proxyUJFAddress);
+    if (hostinfo_cacheujf == NULL) {
+        error("[Error] Can't resolve proxy hostname");
+        exit(0);
+    }
+
+    proxyUJFAddress.sin_addr = *(struct in_addr *) proxyUJFAddressInfo->h_addr;
+    proxyUJFAddress.sin_port = htons(3128);
+    proxyUJFAddress.sin_family = AF_INET;
+
+    //Connexion au proxy cache ujf
+    int connectProxy = connect(socketProxyUJFFileDescriptor,(struct sockaddr *) &proxyUJFAddress, sizeof(struct sockaddr));
+    if(connectProxy < 0){
+        error("[Error] Can't connect to proxy cache ujf");
+        exit(0);
+    }
+
+    //Connexion au webserver nodejs
+    socketNodeJSFileDescriptor = socket(AF_INET, SOCK_STREAM, 0);
+    if(socketNodeJSFileDescriptor < 0){
+        error("[Error] Can't create socket for nodeJS");
+        exit(0);
+    }
+
+    nodeJSServerInfo = gethostbyname(nodeJSServer);
+    if(nodeJSServerInfo == NULL){
+        error("[Error] Can't resolve nodejs hostname");
+        exit(0);
+    }
+
+    nodeJSSockAddress.sin_addr = *(struct in_addr *) nodeJSServerInfo->h_addr;
+    nodeJSSockAddress.sin_port = htons(8080);
+    nodeJSSockAddress.sin_family = AF_INET;
+
+    int connectNodeJS = connect(socketNodeJSFileDescriptor,(struct sockaddr *) &nodeJSSockAddress, sizeof(struct sockaddr));
+    if(connectNodeJS < 0){
+        error("[Error] Can't connect to webserver");
+        exit(0);
+    }
+
     char chaineInfirmiere[] = CHAINEINFIRMIERE;
+    char chaineGestion[] = CHAINEGESTION;
     if(strstr(buffer, chaineInfirmiere)!=NULL) {
-        printf("Infirmiere\n");
+        //TODO: On reconnait la chaine de l'infirmière
     }
-    else {
-        printf("Communicate\n");
+    else if(strstr(buffer_in, chaine_intercept_gest)!=NULL) {
+        //TODO: On reconnait une connexion au paneau de gestion
+    } else {
+        //TODO: Pas de chaine spéciale trouvée, on fait transiter les infos uniquement
     }
-    //Confirm message received
+
+
+    //Confirm message has been received
     RWReturn = write(socket, "ok", 2);
     if (RWReturn < 0){
         error("[Error] Can't write on socket");
