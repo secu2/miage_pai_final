@@ -53,10 +53,10 @@ int main(int argc, char *argv[]) {
 		
 		//strcpy (test2, test.c_str());
                 //googleMapParser.parseDocument("https://maps.googleapis.com/maps/api/distancematrix/xml?origins=%7CGrenoble%2B38041%2B60%2BRue%20de%20la%20chimie%7CGrenoble%2B38031%2B46%2BAvenue%20Felix%20Viallet%7CLa%20Tronche%2B38700%2Brond-Point%20de%20la%20Croix%20de%20Vie&destinations=%7CGrenoble%2B38041%2B60%2BRue%20de%20la%20chimie%7CGrenoble%2B38031%2B46%2BAvenue%20Felix%20Viallet%7CLa%20Tronche%2B38700%2Brond-Point%20de%20la%20Croix%20de%20Vie");
-
-		char* idChar = atoi(id);
-		char* name1 = strconcat("infirmiere", idChar);
-		char* name = strconcat( name1, ".html");
+		char name[13] = "test";
+		strcat(name, id);
+		strcat( name, ".html");
+		printf("\n\n\n\n\nname = %s\n\n\n\n\n\n\n",name);
 		sort.processDistanceMatrix(filename,name,atoi(id),request);
                 
 		/*
