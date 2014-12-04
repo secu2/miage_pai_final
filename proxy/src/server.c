@@ -1,5 +1,5 @@
 #define BUFFER 4096
-#define DEFAULT_PORT 8081
+#define DEFAULT_PORT 8082
 #define WAITLIST 5
 #define MAXSIZE 10
 #define CHAINEINFIRMIERE "/INFIRMIERE"
@@ -15,6 +15,7 @@
 #include <math.h>
 #include <netdb.h>
 #include <errno.h>
+
 
 void handleConnection(int socket);
 void error(const char *error);
@@ -188,7 +189,7 @@ void handleConnection(int socketAttr){
     }
 
     nodeJSSockAddress.sin_addr = *(struct in_addr *) nodeJSServerInfo->h_addr;
-    nodeJSSockAddress.sin_port = htons(67000);
+    nodeJSSockAddress.sin_port = htons(63000);
     nodeJSSockAddress.sin_family = AF_INET;
 
     int connectNodeJS = connect(socketNodeJSFileDescriptor,(struct sockaddr *) &nodeJSSockAddress, sizeof(struct sockaddr));
@@ -207,6 +208,16 @@ void handleConnection(int socketAttr){
             error("[Error] Missing id for infirmiere");
         }else{
             printf("[Conection] Infirmiere %d\n", idInfirmiere);
+		int c;
+		execle("../../cabinetInfirmier/Serveur2/data/XML_Process/testparsers","../../cabineInfirmier/Serveur2/data/cabinetInfirmier.xml", idInfirmiere);
+		FILE* f1 = fopen("../../cabinetInfirmier/Serveur2/data/XML_Process/test.html","r");
+		if(f1)
+		{
+			while ((c = getc(f1))!=EOF)
+				putchar ( c);
+			fclose(f1);
+		}
+			
         }
     }
     else if(strstr(buffer, chaineGestion)!=NULL) {
