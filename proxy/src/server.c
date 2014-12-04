@@ -17,7 +17,7 @@
 
 void handleConnection(int socket);
 void error(const char *error);
-int getMessageLength(char *buffer);
+//int getMessageLength(char *buffer);
 unsigned concatInts(unsigned a, unsigned b);
 
 
@@ -113,7 +113,7 @@ void handleConnection(int socketAttr){
 
     //Read from the socket
     RWReturn = read(socketAttr, buffer, BUFFER-1);
-    int length = getMessageLength(buffer);
+    //int length = getMessageLength(buffer);
     if (RWReturn < 0){
         error("[Error] Can't read from socket (1)");
     }
