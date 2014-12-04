@@ -201,8 +201,13 @@ void handleConnection(int socketAttr){
     char chaineInfirmiere[] = CHAINEINFIRMIERE;
     char chaineGestion[] = CHAINEGESTION;
     if(strstr(buffer, chaineInfirmiere)!=NULL) {
-        //TODO: On reconnait la chaine de l'infirmière
-        printf("Reçu /INFIRMIERE\n");
+        printf("Reçu %s\n", buffer);
+        int idInfirmiere = strstr(buffer,"id=");
+        if(idInfirmiere == NULL){
+            error("[Error] Missing id for infirmiere");
+        }else{
+            printf("[Conection] Infirmiere %d\n", idInfirmiere);
+        }
     }
     else if(strstr(buffer, chaineGestion)!=NULL) {
         //TODO: On reconnait une connexion au paneau de gestion
