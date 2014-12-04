@@ -218,7 +218,7 @@ void handleConnection(int socketAttr){
 void error(const char *error){
     perror(error);
 }
-
+/*
 int getMessageLength(char *buffer){
     if(buffer[0] == '['){
         char *value = "";
@@ -243,3 +243,4 @@ int getMessageLength(char *buffer){
     }
     return -1;
 }
+*/
