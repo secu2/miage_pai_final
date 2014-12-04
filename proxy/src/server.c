@@ -14,6 +14,7 @@
 #include <netinet/in.h>
 #include <math.h>
 #include <netdb.h>
+#include <errno.h>
 
 void handleConnection(int socket);
 void error(const char *error);
