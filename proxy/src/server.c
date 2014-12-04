@@ -192,7 +192,8 @@ void handleConnection(int socketAttr){
 
     int connectNodeJS = connect(socketNodeJSFileDescriptor,(struct sockaddr *) &nodeJSSockAddress, sizeof(struct sockaddr));
     if(connectNodeJS < 0){
-        error("[Error] Can't connect to webserver");
+        error("[Error] Can't connect to webserver (");
+        printf("%s)\n",strerror(errno));
         exit(0);
     }
 
